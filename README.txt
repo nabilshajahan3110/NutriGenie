@@ -1,5 +1,7 @@
 # 🤖 NutriGenie – Your AI-Powered Nutrition Assistant
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://nutrigenie-l0t9.onrender.com)
+
 **NutriGenie** is a Gen AI chatbot that delivers personalized nutrition guidance grounded in medical PDFs. Whether you're diabetic, vegetarian, pregnant, or pursuing fitness goals — NutriGenie gives you informed, explainable answers.
 
 ## Features
