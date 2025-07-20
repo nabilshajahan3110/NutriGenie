@@ -1,0 +1,17 @@
+# 🔐 Do not upload Streamlit secrets (contains API keys)
+.streamlit/secrets.toml
+
+# 🚫 Python cache files
+__pycache__/
+*.pyc
+
+# 🧪 Jupyter notebook checkpoints (if any)
+.ipynb_checkpoints/
+
+# 🗑 OS-specific files
+.DS_Store
+Thumbs.db
+
+# 🌐 Virtual environments (if using venv)
+venv/
+env/
