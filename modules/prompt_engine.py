@@ -13,7 +13,7 @@ vectorstore = build_vector_store(docs)
 def get_nutrition_response(query, profile):
     llm = ChatGroq(
         groq_api_key=GROQ_API_KEY,
-        model_name="llama3-70b-8192"  # or "gemma-7b-it"
+        model_name="llama3-8b-8192"  # or "gemma-7b-it"
     )
 
     # Retrieve chunks
