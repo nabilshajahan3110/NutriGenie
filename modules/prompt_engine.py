@@ -5,21 +5,28 @@ from modules.rag_engine import load_docs, build_vector_store, get_relevant_chunk
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-# Load PDF documents
-pdf_path = "data/diabetes_guidelines.pdf"
-docs = load_docs(pdf_path)
-vectorstore = build_vector_store(docs)
+# Lazy-loading: only build vectorstore once, and reuse it
+@st.cache_resource(show_spinner=False)
+def get_vectorstore():
+    pdf_path = "data/diabetes_guidelines.pdf"
+    docs = load_docs(pdf_path)
+    return build_vector_store(docs)
 
 def get_nutrition_response(query, profile):
+    # Load lightweight LLM
     llm = ChatGroq(
         groq_api_key=GROQ_API_KEY,
-        model_name="llama3-8b-8192"  # or "gemma-7b-it"
+        model_name="llama3-8b-8192"
     )
 
-    # Retrieve chunks
+    # Lazy load vectorstore
+    vectorstore = get_vectorstore()
+
+    # Retrieve context
     relevant_docs = get_relevant_chunks(vectorstore, query)
     context = "\n\n".join([doc.page_content for doc in relevant_docs])
 
+    # Prompt engineering
     prompt = f"""
 You are NutriGenie, a medically cautious nutrition assistant.
 
