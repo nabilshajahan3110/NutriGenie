@@ -1,40 +1,47 @@
-# 🥗 NutriGenie – Your AI-Powered Nutrition Assistant
+# 🥗 NutriGenie – Your AI Nutrition Assistant
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Click_Here-green?style=for-the-badge)](https://nutrigenie.streamlit.app)
+![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit&labelColor=black&link=https://nutrigenie.streamlit.app)
 
-NutriGenie is a GenAI-powered chatbot designed to provide smart, personalized nutrition advice based on your **age**, **goals**, and **dietary preferences**.
+NutriGenie is your personalized AI-powered nutrition assistant. It helps users — including diabetics, gym-goers, vegetarians, and those with dietary restrictions — make informed dietary decisions, grounded in real medical guidelines.
 
-Whether you're diabetic, vegetarian, a gym-goer, or just trying to eat clean — NutriGenie understands your profile and helps answer:
+---
+
+## ⚙️ Features
+
+✅ **Personalized Profile Input**  
+Set your age, weight, health goals, and allergies — and let NutriGenie tailor its recommendations accordingly.
+
+✅ **Natural Language Nutrition Q&A**  
+Ask questions like:
 - “Can I eat jackfruit if I'm diabetic?”
-- “Suggest a high-protein breakfast”
-- “Compare tofu vs paneer for weight loss”
+- “Is tofu better than paneer for weight loss?”
+
+✅ **Medical PDF Integration (RAG)**  
+Answers are grounded in real **diabetes guidelines** using LangChain’s Retrieval-Augmented Generation (RAG).
+
+✅ **Cited Sources**  
+Every answer is backed by page-level chunks from the reference document.
+
+✅ **Lightweight Deployment**  
+Optimized for deployment on [Streamlit Community Cloud](https://streamlit.io/cloud).
 
 ---
 
-## 🧠 Key Features
+## 🚀 Live Demo
 
-- 🧾 **Profile-Aware Responses** – Considers age, weight goals, and dietary needs
-- 📄 **PDF-Guided Answers** – Uses RAG with real nutritional documents
-- 🤖 **Natural Conversations** – Ask in plain language
-- 🌐 **Live App** – [Try it here](https://nutrigenie.streamlit.app)
+🔗 [Click to Try NutriGenie](https://nutrigenie.streamlit.app)
 
 ---
 
-## 🧰 Tech Stack
+## 🧠 Tech Stack
 
-- **LangChain** for LLM & agents
-- **Streamlit** for front-end deployment
-- **FAISS** for vector search
-- **RAG** (Retrieval-Augmented Generation)
-- **GROQ LLM API** (Mistral-7B)
-- **HuggingFace Transformers** + **Sentence Transformers**
-- **Python** + **PDF-based QA**
+- **Frontend**: Streamlit
+- **LLM**: Groq API (via Mixtral / LLaMA3 models)
+- **RAG**: LangChain + FAISS + HuggingFace Embeddings
+- **PDF Parsing**: PyPDFLoader
+- **Backend**: Python 3.10+
+- **Deployment**: Streamlit Cloud
 
 ---
 
-## 🚀 Getting Started (Local Setup)
-
-```bash
-git clone https://github.com/nabilshajahan3110/NutriGenie.git
-cd NutriGenie
-pip install -r requirements.txt
+## 🗂️ Project Structure
