@@ -1,6 +1,6 @@
 # 🥗 NutriGenie – Your AI Nutrition Assistant
 
-![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit&labelColor=black&link=https://nutrigenie.streamlit.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-brightgreen?style=for-the-badge&logo=streamlit&labelColor=black)](https://nutrigeniegit-we86aqjmtg977birtugfl6.streamlit.app/)
 
 NutriGenie is your personalized AI-powered nutrition assistant. It helps users — including diabetics, gym-goers, vegetarians, and those with dietary restrictions — make informed dietary decisions, grounded in real medical guidelines.
 
@@ -29,8 +29,8 @@ Optimized for deployment on [Streamlit Community Cloud](https://streamlit.io/clo
 
 ## 🚀 Live Demo
 
-🔗 [Click to Try NutriGenie](https://nutrigenie.streamlit.app)
-
+Try NutriGenie in your browser (no installation needed):  
+🔗 **[Launch App](https://nutrigeniegit-we86aqjmtg977birtugfl6.streamlit.app/)** 
 ---
 
 ## 🧠 Tech Stack
