@@ -1,47 +1,17 @@
-from langchain_groq import ChatGroq
 import os
 import streamlit as st
-from modules.rag_engine import load_docs, build_vector_store, get_relevant_chunks
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
 
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets["GROQ_API_KEY"]
 
-# Lazy-loading: only build vectorstore once, and reuse it
-@st.cache_resource(show_spinner=False)
-def get_vectorstore():
-    pdf_path = "data/diabetes_guidelines.pdf"
-    docs = load_docs(pdf_path)
-    return build_vector_store(docs)
+llm = ChatGroq(api_key=GROQ_API_KEY, model="llama3-8b-8192")
 
-def get_nutrition_response(query, profile):
-    # Load lightweight LLM
-    llm = ChatGroq(
-        groq_api_key=GROQ_API_KEY,
-        model_name="llama3-8b-8192"
-    )
-
-    # Lazy load vectorstore
-    vectorstore = get_vectorstore()
-
-    # Retrieve context
-    relevant_docs = get_relevant_chunks(vectorstore, query)
-    context = "\n\n".join([doc.page_content for doc in relevant_docs])
-
-    # Prompt engineering
-    prompt = f"""
-You are NutriGenie, a medically cautious nutrition assistant.
-
-User profile:
-- Age: {profile['age']}
-- Weight: {profile['weight']} kg
-- Goal: {profile['goal']}
-- Allergies: {profile['allergies']}
-
-Context from nutrition guidelines:
-{context}
-
-Question: {query}
-
-Answer clearly and cite the PDF when relevant. Keep it concise and beginner-friendly.
-"""
-
+def get_nutrition_response(user_question, profile, chunks):
+    context = "\n\n".join([chunk.page_content for chunk in chunks])
+    prompt_template = ChatPromptTemplate.from_messages([
+        ("system", "You are a helpful dietitian. Use the context and profile to answer."),
+        ("human", "Profile:\n{profile}\n\nContext:\n{context}\n\nQuestion:\n{question}")
+    ])
+    prompt = prompt_template.format_messages(profile=profile, context=context, question=user_question)
     return llm.invoke(prompt).content

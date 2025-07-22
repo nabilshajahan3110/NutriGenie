@@ -1,30 +1,39 @@
 import streamlit as st
 from modules.prompt_engine import get_nutrition_response
+from modules.rag_engine import load_docs, build_vector_store, get_relevant_chunks
 
-st.set_page_config(page_title="NutriGenie", layout="centered")
+st.set_page_config(page_title="NutriGenie – Your AI Nutrition Assistant", layout="wide")
+
 st.title("🥗 NutriGenie – Your AI Nutrition Assistant")
 
-# User profile input
-with st.form("user_info"):
-    age = st.number_input("Age", min_value=1, max_value=100, value=25)
-    weight = st.number_input("Weight (kg)", min_value=10, max_value=200, value=70)
-    goal = st.selectbox("Health Goal", ["Weight Loss", "Muscle Gain", "Diabetes Management", "General Wellness"])
-    allergies = st.text_input("Allergies (comma-separated)")
-    submitted = st.form_submit_button("Save")
+# Collect user input for personalization
+with st.sidebar:
+    st.header("🧑‍⚕️ Your Profile")
+    age = st.number_input("Age", min_value=1, max_value=100, value=30)
+    weight = st.number_input("Weight (kg)", min_value=1, max_value=200, value=70)
+    health_goals = st.text_area("Health Goals", "Maintain weight, control sugar")
+    allergies = st.text_input("Allergies (comma separated)", "gluten, dairy")
+    profile = f"Age: {age}, Weight: {weight}, Goals: {health_goals}, Allergies: {allergies}"
 
-if submitted:
-    st.success("Profile saved!")
+    st.markdown("---")
+    st.markdown("🔍 Based on medical guidelines")
 
-# Chat input
-st.subheader("💬 Ask NutriGenie a Question")
-user_query = st.text_input("e.g., Can I eat mangoes if I’m diabetic?")
+# Build vectorstore at runtime (limited to 3 pages)
+with st.spinner("🔄 Loading knowledge base..."):
+    docs = load_docs("data/diabetes_guidelines.pdf")
+    vectorstore = build_vector_store(docs)
+
+# User query input
+st.subheader("💬 Ask a nutrition question")
+user_query = st.text_input("e.g., Is tofu good for diabetics?", key="query")
 
 if user_query:
-    profile = {
-        "age": age,
-        "weight": weight,
-        "goal": goal,
-        "allergies": allergies
-    }
-    response = get_nutrition_response(user_query, profile)
-    st.markdown(response)
+    with st.spinner("🔎 Thinking..."):
+        relevant_chunks = get_relevant_chunks(vectorstore, user_query)
+        response = get_nutrition_response(user_query, profile, relevant_chunks)
+        st.success("Answer:")
+        st.write(response)
+
+    with st.expander("📚 Sources"):
+        for i, chunk in enumerate(relevant_chunks, 1):
+            st.markdown(f"**{i}.** {chunk.page_content.strip()[:300]}...")

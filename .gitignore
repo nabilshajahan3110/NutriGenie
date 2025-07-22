@@ -1,17 +1,17 @@
-# 🔐 Do not upload Streamlit secrets (contains API keys)
+# Streamlit secrets
 .streamlit/secrets.toml
 
-# 🚫 Python cache files
+# Byte-compiled / cache
 __pycache__/
-*.pyc
+*.py[cod]
+*.pkl
 
-# 🧪 Jupyter notebook checkpoints (if any)
-.ipynb_checkpoints/
+# Environment files
+.env
+.venv/
 
-# 🗑 OS-specific files
-.DS_Store
-Thumbs.db
+# VS Code
+.vscode/
 
-# 🌐 Virtual environments (if using venv)
-venv/
-env/
+# PDF vectorstore if ever regenerated
+data/vectorstore.pkl
